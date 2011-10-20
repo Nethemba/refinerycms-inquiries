@@ -1,0 +1,27 @@
+<%= form_for [main_app, @inquiry] do |f| %>
+  <%= render :partial => "/refinery/admin/error_messages",
+    :locals => {
+    :object => @inquiry,
+    :include_object_name => true
+  } %>
+  <div class="field">
+    <%= f.required_label :name, :class => 'placeholder-fallback' %>
+    <%= f.text_field :name, :class => 'text required', :required => 'required', :placeholder => "#{t('your_name_or_company')} - #{t('required_item')}" %>
+  </div>
+  <div class="field">
+    <%= f.required_label :email, :class => 'placeholder-fallback' %>
+    <%= f.email_field :email, :class => 'text email required', :required => 'required', :placeholder => "#{t('your_email')} - #{t('required_item')}" %>
+  </div>
+  <div class="field">
+    <%= f.label :phone, :class => 'placeholder-fallback' %>
+    <%= f.text_field :phone, :class => 'text phone', :placeholder => t('phone') %>
+  </div>
+  <div class='field message_field'>
+    <%= f.required_label :message, :class => 'placeholder-fallback' %>
+    <%= f.text_area :message, :rows => 8, :class => 'required', :required => 'required', :placeholder => "#{t('message')} - #{t('required_item')}" %>
+  </div>
+  <div class="actions">
+    <%= f.submit t('send') %>
+    <%= link_to t('.privacy_policy'), "/pages/privacy-policy", :id => "privacy_link" if Refinery::Setting.find_or_set(:show_contact_privacy_link, false, :scoping => "inquiries") %>
+  </div>
+<% end %>
